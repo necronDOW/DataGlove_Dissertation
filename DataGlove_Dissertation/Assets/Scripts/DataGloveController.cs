@@ -12,7 +12,11 @@ public class DataGloveController : MonoBehaviour
     }
     private Mode _mode = Mode.Config;
 
-    private ArduinoInterface _interface = null;
+#if UNITY_EDITOR
+	public float simulatedRotation = 0.0f;
+#endif
+
+	private ArduinoInterface _interface = null;
 
     void Awake()
     {
