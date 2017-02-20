@@ -1,4 +1,5 @@
-﻿#define DEBUGGING
+﻿#define DEBUG_INDIV
+//#define DEBUG_ALL
 
 using System.Collections;
 using System.Collections.Generic;
@@ -73,10 +74,15 @@ public class DataMapper : MonoBehaviour
 
     Armature.Group[] armatureGroups;
 
-#if DEBUGGING
+	#if DEBUG_INDIV
     [Range(0, 1)]
     public float tThumb, tIndex, tMiddle, tRing, tPinky;
-#endif
+	#endif
+
+	#if DEBUG_ALL
+	[Range(0, 1)]
+	public float tAll;
+	#endif
 
     void Awake()
     {
@@ -86,7 +92,6 @@ public class DataMapper : MonoBehaviour
 
         Armature[] rawArmature = MapData(armature, ParseData(openDataRaw), ParseData(closedDataRaw));
         CreateArmatureGroups(new string [5] { "thumb", "index", "mid", "ring", "pinky" }, rawArmature);
-        Debug.Log(armatureGroups.Length);
     }
 
     private void Start()
@@ -96,15 +101,21 @@ public class DataMapper : MonoBehaviour
 
     void Update()
     {
-#if DEBUGGING
+		#if DEBUG_INDIV
         float[] tValues = new float[5] { tThumb, tIndex, tMiddle, tRing, tPinky };
+		#endif
 
         for (int i = 0; i < armatureGroups.Length; i++)
         {
-            armatureGroups[i].t = tValues[i];
+			#if DEBUG_INDIV
+			armatureGroups[i].t = tValues[i];
+			#endif
+			#if DEBUG_ALL
+			armatureGroups[i].t = tAll;
+			#endif
+			
             armatureGroups[i].Update();
         }
-#endif
     }
 
     private Transform[] GetArmature()
