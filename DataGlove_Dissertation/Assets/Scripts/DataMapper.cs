@@ -1,5 +1,5 @@
-﻿#define DEBUG_INDIV
-//#define DEBUG_ALL
+﻿//#define DEBUG_INDIV
+#define DEBUG_ALL
 
 using System.Collections;
 using System.Collections.Generic;
