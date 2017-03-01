@@ -4,19 +4,23 @@ using UnityEngine;
 
 public class DataGloveController : MonoBehaviour
 {
-    public string portName = "";
-    private enum Mode
-    {
-        Default,
-        Config
-    }
-    private Mode _mode = Mode.Config;
+    private const int fingerCount = 5;
 
-#if UNITY_EDITOR
-	public float simulatedRotation = 0.0f;
-#endif
+    public string portName = "";
+    public int straightResistance = 0;
+    public int bendResistance = 0;
+    public int[] fingerMapping;
 
 	private ArduinoInterface _interface = null;
+    private DataMapper _dataMapper = null;
+
+    private void OnValidate()
+    {
+        if (fingerMapping.Length != fingerCount)
+        {
+            System.Array.Resize(ref fingerMapping, fingerCount);
+        }
+    }
 
     void Awake()
     {
@@ -24,24 +28,29 @@ public class DataGloveController : MonoBehaviour
         {
             _interface = new ArduinoInterface(portName);
         }
+
+        _dataMapper = GetComponent<DataMapper>();
     }
 
     void Update()
     {
         if (_interface != null)
         {
-            switch (_mode)
+            float[] arduinoValues = _interface.ReadRawSerial();
+
+            for (int i = 0; i < arduinoValues.Length; i++)
             {
-                case Mode.Default:
-                    _interface.Update();
-                    break;
-                case Mode.Config:
-                    if (_interface.Config())
-                    {
-                        _mode = Mode.Default;
-                    }
-                    break;
+                float normalized = Normalize(arduinoValues[i], straightResistance, bendResistance);
+                arduinoValues[i] = Mathf.Clamp01(normalized);
             }
+
+            if (_dataMapper)
+                _dataMapper.UpdateMapping(arduinoValues, fingerMapping);
         }
+    }
+
+    private float Normalize(float value, float min, float max)
+    {
+        return (value - min) / (max - min);
     }
 }
