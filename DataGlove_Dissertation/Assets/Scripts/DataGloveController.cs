@@ -24,10 +24,9 @@ public class DataGloveController : MonoBehaviour
 
     void Awake()
     {
-        if (portName != "")
-        {
-            _interface = new ArduinoInterface(portName);
-        }
+		if (portName != "")
+			_interface = new ArduinoInterface(portName);
+		else _interface = new ArduinoInterface();
 
         _dataMapper = GetComponent<DataMapper>();
     }
@@ -38,9 +37,9 @@ public class DataGloveController : MonoBehaviour
         {
             float[] arduinoValues = _interface.ReadRawSerial();
 
-            for (int i = 0; i < arduinoValues.Length; i++)
+			for (int i = 0; i < arduinoValues.Length; i++)
             {
-                float normalized = Normalize(arduinoValues[i], straightResistance, bendResistance);
+                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), straightResistance, bendResistance);
                 arduinoValues[i] = Mathf.Clamp01(normalized);
             }
 
