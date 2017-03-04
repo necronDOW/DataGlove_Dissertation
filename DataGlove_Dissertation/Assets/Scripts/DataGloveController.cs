@@ -4,22 +4,22 @@ using UnityEngine;
 
 public class DataGloveController : MonoBehaviour
 {
-    private const int fingerCount = 5;
+    public const float minResistance = 0;
+    public const float maxResistance = 100000;
 
     public string portName = "";
-    public int straightResistance = 0;
-    public int bendResistance = 0;
-    public int[] fingerMapping;
+    public int scanDepth;
+    public float straightResistance = minResistance;
+    public float bendResistance = maxResistance;
+    public int[] fingerMapping = new int[5];
 
 	private ArduinoInterface _interface = null;
     private DataMapper _dataMapper = null;
 
     private void OnValidate()
     {
-        if (fingerMapping.Length != fingerCount)
-        {
-            System.Array.Resize(ref fingerMapping, fingerCount);
-        }
+        if (scanDepth < 0)
+            scanDepth = 0;
     }
 
     void Awake()

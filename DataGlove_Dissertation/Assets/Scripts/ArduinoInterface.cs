@@ -14,7 +14,7 @@ public class ArduinoInterface
 		private set { }
 	}
 
-	public ArduinoInterface(uint scanDepth = 5)
+	public ArduinoInterface(int scanDepth = 5)
 	{
 		for (int i = 0; i < scanDepth; i++)
 		{
@@ -26,12 +26,12 @@ public class ArduinoInterface
 
 			if (_port.IsOpen)
 			{
-				Debug.Log("Found Port " + portName + ".");
+				Debug.Log("Connected... \nPort: " + portName + ", Baud: " + baudRate + ".");
 				return;
 			}
 		}
 
-		Debug.LogError("Port Scanning failed.");
+		Debug.LogError("Unable to connect...\nSearched: COM0 -> COM" + scanDepth + ".");
 	}
 
 	public ArduinoInterface(string portName)
