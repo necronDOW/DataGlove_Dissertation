@@ -4,13 +4,10 @@ using UnityEngine;
 
 public class DataGloveController : MonoBehaviour
 {
-    public const float minResistance = 0;
-    public const float maxResistance = 100000;
-
     public string portName = "";
     public int scanDepth;
-    public float straightResistance = minResistance;
-    public float bendResistance = maxResistance;
+    public static Range rBounds = new Range(0, 100000);
+    public Range rRange = new Range(rBounds.min, rBounds.max);
     public int[] fingerMapping = new int[5];
 
 	private ArduinoInterface _interface = null;
@@ -39,7 +36,7 @@ public class DataGloveController : MonoBehaviour
 
 			for (int i = 0; i < arduinoValues.Length; i++)
             {
-                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), straightResistance, bendResistance);
+                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), rRange.min, rRange.max);
                 arduinoValues[i] = Mathf.Clamp01(normalized);
             }
 
@@ -51,5 +48,17 @@ public class DataGloveController : MonoBehaviour
     private float Normalize(float value, float min, float max)
     {
         return (value - min) / (max - min);
+    }
+
+    public struct Range
+    {
+        public float min;
+        public float max;
+
+        public Range(float min, float max)
+        {
+            this.min = min;
+            this.max = max;
+        }
     }
 }
