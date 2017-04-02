@@ -1,4 +1,4 @@
-const int sensorCount = 5;
+const int sensorCount = 4;
 const float vcc = 4.98;
 const float rDiv = 20000.0;
 
