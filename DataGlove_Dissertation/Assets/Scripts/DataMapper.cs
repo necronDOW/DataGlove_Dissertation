@@ -32,15 +32,15 @@ public class DataMapper : MonoBehaviour
     }
     #endif
 
-    public void UpdateMapping(float[] input, int[] mappingIndices)
+    public void UpdateMapping(float[] input, List<DataGloveController.Sensor> sensors)
     {
-        int length = Mathf.Min(input.Length, armatureGroups.Length);
+        int length = armatureGroups.Length;
 
         for (int i = 0; i < length; i++)
         {
-            if (mappingIndices[i] >= 0)
+            if (sensors[i].mapping >= 0 && sensors[i].mapping < input.Length)
             {
-                armatureGroups[i].t = input[mappingIndices[i]];
+                armatureGroups[i].t = input[sensors[i].mapping];
                 armatureGroups[i].Update();
             }
         }

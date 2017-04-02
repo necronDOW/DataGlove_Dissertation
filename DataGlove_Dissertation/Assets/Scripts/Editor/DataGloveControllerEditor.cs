@@ -7,10 +7,9 @@ using UnityEditor;
 public class DataGloveControllerEditor : Editor
 {
     private bool resistanceFoldout = true;
-    private bool fingerFoldout = true;
-    private float minR = DataGloveController.rBounds.min;
-    private float maxR = DataGloveController.rBounds.max;
-    private string[] fingers = new string[5] { "Thumb", "Index", "Middle", "Ring", "Pinky" };
+    private bool sensorFoldout = true;
+    private float minR = 0;
+    private float maxR = 100000;
 
     public override void OnInspectorGUI()
     {
@@ -19,22 +18,30 @@ public class DataGloveControllerEditor : Editor
         if ((dgc.portName = EditorGUILayout.TextField("Port", dgc.portName)) == "")
             dgc.scanDepth = Mathf.Clamp(EditorGUILayout.IntField("Scan Depth:", dgc.scanDepth), 0, int.MaxValue);
 
-        if (resistanceFoldout = EditorGUILayout.Foldout(resistanceFoldout, "Resistance Range"))
+        if (sensorFoldout = EditorGUILayout.Foldout(sensorFoldout, "Sensor Mapping"))
         {
             EditorGUILayout.BeginHorizontal();
-                GUILayout.Label("Min");
-                dgc.rRange.min = EditorGUILayout.FloatField(dgc.rRange.min);
-                GUILayout.Label("Max");
-                dgc.rRange.max = EditorGUILayout.FloatField(dgc.rRange.max);
+                if (GUILayout.Button("Add sensor"))
+                    dgc.sensors.Add(new DataGloveController.Sensor());
+                if (GUILayout.Button("Remove sensor") && dgc.sensors.Count > 0)
+                    dgc.sensors.RemoveAt(dgc.sensors.Count - 1);
             EditorGUILayout.EndHorizontal();
 
-            EditorGUILayout.MinMaxSlider(ref dgc.rRange.min, ref dgc.rRange.max, minR, maxR);
-        }
-        
-        if (fingerFoldout = EditorGUILayout.Foldout(fingerFoldout, "Finger Mapping"))
-        {
-            for (int i = 0; i < dgc.fingerMapping.Length; i++)
-                EditorGUILayout.IntField(fingers[i], dgc.fingerMapping[i]);
+            for (int i = 0; i < dgc.sensors.Count; i++)
+            {
+                EditorGUILayout.BeginHorizontal();
+                    GUILayout.Label("Mapping");
+                    dgc.sensors[i].mapping = EditorGUILayout.IntField(dgc.sensors[i].mapping);
+
+                    GUILayout.Label("Resistance Range");
+                    dgc.sensors[i].range.min = EditorGUILayout.FloatField(dgc.sensors[i].range.min);
+                    dgc.sensors[i].range.max = EditorGUILayout.FloatField(dgc.sensors[i].range.max);
+
+                    EditorGUILayout.MinMaxSlider(ref dgc.sensors[i].range.min, ref dgc.sensors[i].range.max, minR, maxR);
+                EditorGUILayout.EndHorizontal();
+
+                EditorGUILayout.Space();
+            }
         }
 
         Validate(dgc);
@@ -42,7 +49,10 @@ public class DataGloveControllerEditor : Editor
 
     void Validate(DataGloveController o)
     {
-        o.rRange.min = Mathf.Clamp(o.rRange.min, minR, o.rRange.max);
-        o.rRange.max = Mathf.Clamp(o.rRange.max, o.rRange.min, maxR);
+        foreach (DataGloveController.Sensor s in o.sensors)
+        {
+            s.range.min = Mathf.Clamp(s.range.min, minR, s.range.max);
+            s.range.max = Mathf.Clamp(s.range.max, s.range.min, maxR);
+        }
     }
 }

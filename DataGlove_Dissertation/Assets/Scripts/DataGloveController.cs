@@ -6,9 +6,7 @@ public class DataGloveController : MonoBehaviour
 {
     public string portName = "";
     public int scanDepth;
-    public static Range rBounds = new Range(0, 100000);
-    public Range rRange = new Range(rBounds.min, rBounds.max);
-    public int[] fingerMapping = new int[5];
+    public List<Sensor> sensors;
 
 	private ArduinoInterface _interface = null;
     private DataMapper _dataMapper = null;
@@ -36,12 +34,12 @@ public class DataGloveController : MonoBehaviour
 
 			for (int i = 0; i < arduinoValues.Length; i++)
             {
-                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), rRange.min, rRange.max);
+                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), sensors[i].range.min, sensors[i].range.max);
                 arduinoValues[i] = Mathf.Clamp01(normalized);
             }
 
             if (_dataMapper)
-                _dataMapper.UpdateMapping(arduinoValues, fingerMapping);
+                _dataMapper.UpdateMapping(arduinoValues, sensors);
         }
     }
 
@@ -50,6 +48,7 @@ public class DataGloveController : MonoBehaviour
         return (value - min) / (max - min);
     }
 
+    [System.Serializable]
     public struct Range
     {
         public float min;
@@ -60,5 +59,12 @@ public class DataGloveController : MonoBehaviour
             this.min = min;
             this.max = max;
         }
+    }
+
+    [System.Serializable]
+    public class Sensor
+    {
+        public int mapping = 0;
+        public Range range = new Range(0, 100000);
     }
 }
