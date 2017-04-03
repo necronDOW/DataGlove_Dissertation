@@ -4,9 +4,18 @@ using UnityEngine;
 
 public class DataGloveController : MonoBehaviour
 {
+    public enum ActionFlag
+    {
+        Open,
+        Closed
+    }
+    [HideInInspector]
+    public ActionFlag currentAction = ActionFlag.Open;
+
     public string portName = "";
     public int scanDepth;
     public List<Sensor> sensors;
+    public float gripThreshold = 0.8f;
 
 	private ArduinoInterface _interface = null;
     private DataMapper _dataMapper = null;
@@ -30,16 +39,26 @@ public class DataGloveController : MonoBehaviour
     {
         if (_interface != null)
         {
+            float meanOfValues = 0.0f;
             float[] arduinoValues = _interface.ReadRawSerial();
 
-			for (int i = 0; i < arduinoValues.Length; i++)
+            if (arduinoValues != null)
             {
-                float normalized = Normalize(Mathf.Abs(arduinoValues[i]), sensors[i].range.min, sensors[i].range.max);
-                arduinoValues[i] = Mathf.Clamp01(normalized);
-            }
+                for (int i = 0; i < arduinoValues.Length; i++)
+                {
+                    float normalized = Normalize(Mathf.Abs(arduinoValues[i]), sensors[i].range.min, sensors[i].range.max);
+                    arduinoValues[i] = Mathf.Clamp01(normalized);
+                    meanOfValues += arduinoValues[i];
+                }
 
-            if (_dataMapper)
-                _dataMapper.UpdateMapping(arduinoValues, sensors);
+                if (_dataMapper)
+                    _dataMapper.UpdateMapping(arduinoValues, sensors);
+
+                meanOfValues /= arduinoValues.Length;
+            }
+            if (meanOfValues >= gripThreshold)
+                currentAction = ActionFlag.Closed;
+            else currentAction = ActionFlag.Open;
         }
     }
 

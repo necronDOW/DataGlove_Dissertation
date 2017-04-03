@@ -1,0 +1,147 @@
+fileFormatVersion: 2
+guid: 7d875a6a7ac4456409fe7393beb28f84
+timeCreated: 1491246386
+licenseType: Free
+ModelImporter:
+  serializedVersion: 19
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Pad
+    100004: Pad_0
+    100006: Pad_Asterisk
+    100008: Pad_Eight
+    100010: Pad_Five
+    100012: Pad_Four
+    100014: Pad_Hash
+    100016: Pad_Nine
+    100018: Pad_One
+    100020: Pad_Screen
+    100022: Pad_Seven
+    100024: Pad_Six
+    100026: Pad_Three
+    100028: Pad_Two
+    400000: //RootNode
+    400002: Pad
+    400004: Pad_0
+    400006: Pad_Asterisk
+    400008: Pad_Eight
+    400010: Pad_Five
+    400012: Pad_Four
+    400014: Pad_Hash
+    400016: Pad_Nine
+    400018: Pad_One
+    400020: Pad_Screen
+    400022: Pad_Seven
+    400024: Pad_Six
+    400026: Pad_Three
+    400028: Pad_Two
+    2300000: Pad
+    2300002: Pad_0
+    2300004: Pad_Asterisk
+    2300006: Pad_Eight
+    2300008: Pad_Five
+    2300010: Pad_Four
+    2300012: Pad_Hash
+    2300014: Pad_Nine
+    2300016: Pad_One
+    2300018: Pad_Screen
+    2300020: Pad_Seven
+    2300022: Pad_Six
+    2300024: Pad_Three
+    2300026: Pad_Two
+    3300000: Pad
+    3300002: Pad_0
+    3300004: Pad_Asterisk
+    3300006: Pad_Eight
+    3300008: Pad_Five
+    3300010: Pad_Four
+    3300012: Pad_Hash
+    3300014: Pad_Nine
+    3300016: Pad_One
+    3300018: Pad_Screen
+    3300020: Pad_Seven
+    3300022: Pad_Six
+    3300024: Pad_Three
+    3300026: Pad_Two
+    4300000: Pad_Screen
+    4300002: Pad_Hash
+    4300004: Pad_0
+    4300006: Pad_Asterisk
+    4300008: Pad_Nine
+    4300010: Pad_Eight
+    4300012: Pad_Seven
+    4300014: Pad_Six
+    4300016: Pad_Five
+    4300018: Pad_Four
+    4300020: Pad_Three
+    4300022: Pad_Two
+    4300024: Pad_One
+    4300026: Pad
+  materials:
+    importMaterials: 0
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 0
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

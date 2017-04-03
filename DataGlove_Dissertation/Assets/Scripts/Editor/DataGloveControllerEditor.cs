@@ -44,6 +44,8 @@ public class DataGloveControllerEditor : Editor
             }
         }
 
+        dgc.gripThreshold = EditorGUILayout.FloatField("Grip Threshold", dgc.gripThreshold);
+
         Validate(dgc);
     }
 
