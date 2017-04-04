@@ -39,7 +39,7 @@ public class DataGloveController : MonoBehaviour
     {
         if (_interface != null)
         {
-            float meanOfValues = 0.0f;
+            int clenched = 0;
             float[] arduinoValues = _interface.ReadRawSerial();
 
             if (arduinoValues != null)
@@ -48,15 +48,15 @@ public class DataGloveController : MonoBehaviour
                 {
                     float normalized = Normalize(Mathf.Abs(arduinoValues[i]), sensors[i].range.min, sensors[i].range.max);
                     arduinoValues[i] = Mathf.Clamp01(normalized);
-                    meanOfValues += arduinoValues[i];
+
+                    if (arduinoValues[i] >= gripThreshold)
+                        clenched++;
                 }
 
                 if (_dataMapper)
                     _dataMapper.UpdateMapping(arduinoValues, sensors);
-
-                meanOfValues /= arduinoValues.Length;
             }
-            if (meanOfValues >= gripThreshold)
+            if (clenched == arduinoValues.Length)
                 currentAction = ActionFlag.Closed;
             else currentAction = ActionFlag.Open;
         }

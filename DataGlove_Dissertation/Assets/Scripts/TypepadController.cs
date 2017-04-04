@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class TypepadController : MonoBehaviour
 {
     public GameObject screen;
+    public Text output;
     public Material material;
     public string combinationGoal;
 
@@ -17,14 +19,20 @@ public class TypepadController : MonoBehaviour
         {
             if (character == '*' || character == '#')
             {
-                _currentCombination = "";
+                SetCombination("");
                 return;
             }
 
-            _currentCombination += character;
-            Debug.Log(_currentCombination);
+            SetCombination(_currentCombination + character);
             CheckCombination();
         }
+    }
+
+    private void SetCombination(string newCombination)
+    {
+        _currentCombination = newCombination;
+        if (output)
+            output.text = _currentCombination;
     }
 
     private void CheckCombination()

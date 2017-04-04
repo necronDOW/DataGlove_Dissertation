@@ -13,9 +13,9 @@ public class TypepadButton : MonoBehaviour
         _controller = transform.parent.GetComponent<TypepadController>();
     }
 
-    private void OnTriggerEnter(Collider other)
+    private void OnTriggerExit(Collider other)
     {
-        if (other.attachedRigidbody.tag == "Player" && _controller)
+        if (other.GetType()  == typeof(SphereCollider) && other.attachedRigidbody.tag == "Player" && _controller)
             _controller.Add(value);
     }
 }

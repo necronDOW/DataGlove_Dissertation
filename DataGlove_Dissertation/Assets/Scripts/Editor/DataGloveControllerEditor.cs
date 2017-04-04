@@ -45,16 +45,5 @@ public class DataGloveControllerEditor : Editor
         }
 
         dgc.gripThreshold = EditorGUILayout.FloatField("Grip Threshold", dgc.gripThreshold);
-
-        Validate(dgc);
-    }
-
-    void Validate(DataGloveController o)
-    {
-        foreach (DataGloveController.Sensor s in o.sensors)
-        {
-            s.range.min = Mathf.Clamp(s.range.min, minR, s.range.max);
-            s.range.max = Mathf.Clamp(s.range.max, s.range.min, maxR);
-        }
     }
 }

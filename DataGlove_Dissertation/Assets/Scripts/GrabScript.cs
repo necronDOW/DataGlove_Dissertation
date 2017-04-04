@@ -31,7 +31,7 @@ public class GrabScript : MonoBehaviour
         {
             Rigidbody rb = other.attachedRigidbody;
             if (rb && !rb.isKinematic && !_attachedObject)
-                Attach(other.gameObject, rb);
+                Attach(rb.gameObject, rb);
         }
     }
 
